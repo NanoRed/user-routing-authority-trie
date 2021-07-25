@@ -62,14 +62,14 @@ func (n *Node) ipop(path *[]byte) (seg, label string, w bool) {
 	return
 }
 
-func (n *Node) Insert(path []byte, value uint64, labels map[string]string) (err error) {
+func (n *Node) Insert(path []byte, value []uint64, labels map[string]string) (err error) {
 RESTART:
 	if len(path) == 0 {
-		if value > 0 {
+		if len(value) > 0 {
 			if n.Container == nil {
 				n.Container = roaring64.New()
 			}
-			n.Container.Add(value)
+			n.Container.AddMany(value)
 		}
 		n.Labels = labels
 		n.End = true
